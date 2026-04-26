@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OBubba Blog — Smarter Parenting Through Pattern Recognition</title>
+<meta name="description" content="Research-backed insights on baby sleep, feeding, and development. From the creators of OBubba — the baby tracking app that learns your baby's unique patterns.">
+<meta property="og:title" content="Why Sleep Training Fails for Half of All Families — And What Actually Works">
+<meta property="og:description" content="The research behind sleep training is far more limited than parents are told. Here's what the data actually says.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-deep: #0a0e1a;
+    --navy: #111827;
+    --navy-light: #1a2236;
+    --navy-surface: #1e2a42;
+    --glass: rgba(30, 42, 66, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.06);
+    --glow-purple: #a855f7;
+    --glow-pink: #ec4899;
+    --glow-amber: #f59e0b;
+    --amber-warm: #fbbf24;
+    --amber-soft: rgba(251, 191, 36, 0.08);
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --accent-gradient: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #f59e0b 100%);
+    --font-display: 'DM Serif Display', serif;
+    --font-body: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--navy-deep);
+    color: var(--text-primary);
+    line-height: 1.7;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Ambient background glows */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -20%;
+    left: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -20%;
+    right: -10%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, rgba(236, 72, 153, 0.04) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1rem 2rem;
+    background: rgba(10, 14, 26, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .nav-logo .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-gradient);
+    display: inline-block;
+    animation: pulse-dot 3s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.3); }
+  }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--text-primary); }
+  .nav-cta {
+    background: var(--accent-gradient);
+    color: var(--navy-deep) !important;
+    padding: 0.5rem 1.25rem;
+    border-radius: 100px;
+    font-weight: 700 !important;
+    font-size: 0.8rem !important;
+    letter-spacing: 0.03em;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    padding: 10rem 2rem 4rem;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .hero-badge {
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    border-radius: 100px;
+    background: var(--amber-soft);
+    border: 1px solid rgba(251, 191, 36, 0.15);
+    color: var(--amber-warm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-meta {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .hero-meta .sep { opacity: 0.3; }
+
+  /* ── ARTICLE ── */
+  .article-container {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+  }
+
+  .article-container p {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+  }
+
+  .article-container h2 {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    color: var(--text-primary);
+    margin: 3.5rem 0 1.25rem;
+    line-height: 1.3;
+    position: relative;
+  }
+  .article-container h2::before {
+    content: '';
+    position: absolute;
+    left: -1.5rem;
+    top: 0.3rem;
+    width: 3px;
+    height: 1.5rem;
+    background: var(--accent-gradient);
+    border-radius: 2px;
+  }
+
+  .article-container strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .article-container em {
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  /* Lead paragraph */
+  .lead {
+    font-size: 1.2rem !important;
+    color: var(--text-primary) !important;
+    line-height: 1.8;
+    border-left: 2px solid rgba(168, 85, 247, 0.3);
+    padding-left: 1.25rem;
+    margin-bottom: 2rem !important;
+  }
+
+  /* Stat callout boxes */
+  .stat-callout {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 1.5rem 1.75rem;
+    margin: 2rem 0;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-callout::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent-gradient);
+  }
+  .stat-callout .stat-number {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .stat-callout .stat-label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+
+  /* Citation refs */
+  .ref {
+    color: var(--glow-purple);
+    font-size: 0.75rem;
+    vertical-align: super;
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .ref:hover { color: var(--glow-pink); }
+
+  /* Divider */
+  .divider {
+    width: 60px;
+    height: 2px;
+    background: var(--accent-gradient);
+    margin: 3rem auto;
+    border-radius: 2px;
+  }
+
+  /* ── REFERENCES SECTION ── */
+  .references {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+    position: relative;
+    z-index: 1;
+  }
+  .references h3 {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+  }
+  .ref-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .ref-list li {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    line-height: 1.6;
+    padding-left: 2rem;
+    position: relative;
+  }
+  .ref-list li .ref-num {
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--glow-purple);
+    font-weight: 700;
+    font-size: 0.75rem;
+  }
+  .ref-list li em { color: var(--text-secondary); }
+
+  /* ── CTA BANNER ── */
+  .cta-banner {
+    max-width: 720px;
+    margin: 0 auto 4rem;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 1;
+  }
+  .cta-inner {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-inner h3 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+  }
+  .cta-inner p {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+  }
+  .cta-button {
+    display: inline-block;
+    padding: 0.85rem 2.5rem;
+    background: var(--accent-gradient);
+    color: var(--navy-deep);
+    font-weight: 700;
+    font-size: 0.9rem;
+    border-radius: 100px;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(168, 85, 247, 0.3);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--glass-border);
+    padding: 2rem;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+  footer a {
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    nav { padding: 0.75rem 1rem; }
+    .nav-links { display: none; }
+    .hero { padding: 7rem 1.25rem 3rem; }
+    .article-container, .references, .cta-banner { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .article-container h2::before { display: none; }
+    .stat-callout { padding: 1.25rem; }
+    .cta-inner { padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo"><span class="dot"></span> OBubba Blog</a>
+  <ul class="nav-links">
+    <li><a href="#">Articles</a></li>
+    <li><a href="#">Research</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#" class="nav-cta">GET OBUBBA</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <div class="hero-badge">Featured Research</div>
+  <h1>Why Sleep Training Fails for Half of All Families — And What Actually Works</h1>
+  <div class="hero-meta">
+    <span>By the OBubba Team</span>
+    <span class="sep">·</span>
+    <span>12 min read</span>
+    <span class="sep">·</span>
+    <span>12 peer-reviewed sources</span>
+  </div>
+</header>
+
+<article class="article-container">
+
+  <p class="lead">For six months, a mother followed every piece of advice she received. Friends. Family. ChatGPT. A £150 sleep consultant. All said the same thing: lengthen the wake windows. Six months of worse sleep. Within a week of switching to OBubba's pattern-based approach, her baby was sleeping better. The solution? The exact opposite of what every expert recommended.</p>
+
+  <p>The advice itself had created the problem it was supposed to solve.</p>
+
+  <p>This isn't an isolated case. This is systematic failure disguised as expertise. And it's about to become obsolete.</p>
+
+  <div class="divider"></div>
+
+  <h2>The Research Behind Sleep Training Is Fundamentally Broken</h2>
+
+  <p>The sleep training industry has a dirty secret: the evidence doesn't support what they're selling.</p>
+
+  <p>The most frequently cited review of sleep training research — Mindell et al. (2006), published in the journal <em>Sleep</em> — examined 52 studies. Of those, only 11 met the American Academy of Sleep Medicine's own classification levels for quality research. More than 77% of the studies relied on subjective data collection measures like parent-reported sleep diaries rather than objective sleep monitoring.<a href="#ref-1" class="ref">[1]</a></p>
+
+  <div class="stat-callout">
+    <div class="stat-number">77%</div>
+    <div class="stat-label">of sleep training studies relied on subjective parent reports rather than objective sleep measurement — Mindell et al. (2006), <em>Sleep</em></div>
+  </div>
+
+  <p>Objective sleep measurement tells a different story. Studies using actigraphy — wearable devices that track actual sleep — show that sleep patterns are not meaningfully different in babies before and after sleep training, or compared to babies who are not sleep trained.<a href="#ref-2" class="ref">[2]</a> Sleep training doesn't change how babies sleep. It changes whether they signal to their parents when they wake.</p>
+
+  <p>The most-cited long-term study? Price et al. (2012), published in <em>Pediatrics</em>, followed 328 families over five years and concluded sleep training caused no long-term harm. But a peer-reviewed response in the same journal identified a critical flaw: the researchers never confirmed who in the control group actually did or didn't sleep train. They simply assumed.<a href="#ref-3" class="ref">[3]</a> Of the 174 families allocated to the intervention group, only 100 accepted the nurses' offer, and only 60 of those chose to receive information on controlled crying or camping out.</p>
+
+  <p>That makes it impossible to draw reliable conclusions about effectiveness. But the industry knows this and keeps selling the same protocols anyway.</p>
+
+  <div class="divider"></div>
+
+  <h2>Why Generalised Advice Creates the Problems It Claims to Solve</h2>
+
+  <p>An expert tells you your baby needs three naps a day. Sounds reasonable. Evidence-based, even. But what happens when your baby only naps for 10 minutes?</p>
+
+  <p>You end up with massive sleep debt. Wake windows that are too long for your baby's actual capacity. Horrible night sleep. Then the expert tells you to push the wake windows even longer. <strong>The advice itself creates the crisis.</strong></p>
+
+  <p>Babies aren't robots. You can hand them your perfectly researched schedule and watch them do the exact opposite. No two babies are the same, even if they're born seconds apart.</p>
+
+  <p>Twin studies confirm this. Brescianini et al. (2011) studied 314 twin pairs — both identical and non-identical — and found that while shared environmental factors accounted for 64.1% of the variation in nocturnal sleep duration, genetic factors still contributed 30.8%.<a href="#ref-4" class="ref">[4]</a> A larger UK study by Fisher et al. (2012) of 1,931 twin pairs found a similar pattern: shared environment explained 66% of nighttime sleep variation, with a genetic effect of 26%.<a href="#ref-5" class="ref">[5]</a></p>
+
+  <div class="stat-callout">
+    <div class="stat-number">30.8%</div>
+    <div class="stat-label">of variation in nocturnal sleep duration is explained by genetics — even babies raised in the same household develop different sleep architectures. Brescianini et al. (2011), <em>Pediatrics</em></div>
+  </div>
+
+  <p>If twins born at the same moment, in the same home, sleep differently — what does that say about age-based schedules applied to millions of babies?</p>
+
+  <p>It says the entire foundation is scientifically indefensible.</p>
+
+  <div class="divider"></div>
+
+  <h2>The Gap Between Data Collection and Actual Intelligence</h2>
+
+  <p>Parents are drowning in data but starving for answers. At 3am, when the expert advice isn't working, they're spiralling. They're googling. They're asking ChatGPT. They're getting the same generalised advice that created the problem in the first place.</p>
+
+  <p>Most baby tracking apps log data. They don't analyse it. They definitely don't learn from it.</p>
+
+  <p>Research on real-world sleep training experiences paints a stark picture. Loutzenhiser et al. (2014) surveyed Canadian parents and found that only 14% reported sleep training eliminated all waking, while almost 50% said it produced no improvement at all.<a href="#ref-6" class="ref">[6]</a> Gordon (2020) found similar results: extinction methods didn't work for 40–50% of families in real-world settings.<a href="#ref-7" class="ref">[7]</a> Even within controlled research studies, failure rates range between 16% and 50% of participants.<a href="#ref-8" class="ref">[8]</a></p>
+
+  <div class="stat-callout">
+    <div class="stat-number">~50%</div>
+    <div class="stat-label">of parents reported no improvement from sleep training in real-world settings — Loutzenhiser et al. (2014); Gordon (2020)</div>
+  </div>
+
+  <p>You need actual data to understand a baby's patterns. You need intelligence that adapts. A sleep consultant can't be present every day to see how your baby actually sleeps. They can't track what happens when your baby sleeps after two hours awake compared to three. They can't learn when your baby sleeps best and how your baby sleeps best.</p>
+
+  <p><strong>OBubba does.</strong></p>
+
+  <p>The system doesn't blindly tell parents to lengthen wake windows. It observes. It learns. It adapts to the individual baby's rhythm. This is the shift from protocol adherence to pattern recognition.</p>
+
+  <div class="divider"></div>
+
+  <h2>What Parents Are Actually Choosing</h2>
+
+  <p>When a parent chooses pattern-based guidance over what their paediatrician or mother told them, something profound happens. They're choosing to trust their baby's natural rhythm. They're leaning into what their baby actually needs instead of blindly following what they've been told their baby should need.</p>
+
+  <p>This isn't rebellion. It's reclaiming observational authority.</p>
+
+  <p>At six months of age, almost half the individual variation in nighttime sleep duration can be explained by genetic factors.<a href="#ref-9" class="ref">[9]</a> Meanwhile, individual differences in napping trajectory were almost entirely explained by environmental factors like whether parents promoted or discouraged napping.<a href="#ref-10" class="ref">[10]</a></p>
+
+  <p>Some babies can only handle short wake windows. Others are perfectly happy doing really long ones without getting overtired. Trying to force a baby to sleep on a generalised wake window creates under-tired or over-tired sleep issues. You can't standardise what's biologically individual.</p>
+
+  <div class="divider"></div>
+
+  <h2>Why the Sleep Consulting Industry Clings to Broken Models</h2>
+
+  <p>If the research is flawed and the methods fail for half of families, why does the industry keep pushing the same protocols? Because it's easiest to make generalised assumptions.</p>
+
+  <p>There was never a tool that could do what OBubba does. There were never enough resources to adapt to individual babies and help them separately. So parents either forked out hundreds of pounds or struggled silently.</p>
+
+  <p>The economic model of sleep consulting depends on scalable, one-size-fits-all advice. A consultant can sell the same protocol to 100 families. They can't provide individualised, adaptive guidance to 100 families.</p>
+
+  <p>Blunden et al. (2011), writing in <em>Sleep Medicine Reviews</em>, identified the core problem: because it is infant crying, not infant waking, that disturbs parents, many sleep training methods focus on managing crying rather than actually improving sleep.<a href="#ref-11" class="ref">[11]</a> The industry sells behavioural compliance — getting the baby to stop signalling — not genuine sleep improvement.</p>
+
+  <div class="divider"></div>
+
+  <h2>What 2030 Will Think About 2024</h2>
+
+  <p>In 2030, parents will look back at 2024 and think one thing was absurd: trying to make every baby fit the same mould. The practice of rigid, age-based sleep schedules will seem as outdated as telling all babies to sleep on their stomachs.</p>
+
+  <p>By 2030, the 3am Google spiral will be dead. Instead of searching "why won't my baby sleep," parents will open an app that already knows the answer — because it's been watching the patterns they're too exhausted to see.</p>
+
+  <p>Pattern recognition will replace protocol adherence across all areas of early parenting. Not just sleep. Feeding. Weaning. Everything baby-related.</p>
+
+  <div class="divider"></div>
+
+  <h2>The Future Is Already Here</h2>
+
+  <p>A large-scale mobile app study confirmed what parents have always known intuitively: sleep patterns are ever-changing across the first few years with wide individual variability, and patterns only start to develop more clearly at five to six months.<a href="#ref-12" class="ref">[12]</a></p>
+
+  <p>You can't force a standard schedule onto a unique child.</p>
+
+  <p>The future belongs to systems that learn your child, not systems that tell you what your child should be.</p>
+
+  <p><strong>And that future is already here.</strong></p>
+
+</article>
+
+<section class="references">
+  <h3>References</h3>
+  <ol class="ref-list">
+    <li id="ref-1"><span class="ref-num">[1]</span> Mindell, J.A., Kuhn, B., Lewin, D.S., Meltzer, L.J., &amp; Sadeh, A. (2006). Behavioral treatment of bedtime problems and night wakings in infants and young children. <em>Sleep</em>, 29(10), 1263–1276.</li>
+    <li id="ref-2"><span class="ref-num">[2]</span> Galland, B.C. et al. (2017). <em>BMJ Open</em>, 7(5), e014908. — Hall, W.A. et al. (2015). <em>BMC Pediatrics</em>, 15, 181. — Kempler, L. et al. (2016). <em>Sleep Medicine Reviews</em>, 29, 15–22.</li>
+    <li id="ref-3"><span class="ref-num">[3]</span> Price, A.M.H., Wake, M., Ukoumunne, O.C., &amp; Hiscock, H. (2012). Five-year follow-up of harms and benefits of behavioral infant sleep intervention. <em>Pediatrics</em>, 130(4), 643–651.</li>
+    <li id="ref-4"><span class="ref-num">[4]</span> Brescianini, S. et al. (2011). Genetic and environmental factors shape infant sleep patterns: A study of 18-month-old twins. <em>Pediatrics</em>, 127(5), e1296–e1302.</li>
+    <li id="ref-5"><span class="ref-num">[5]</span> Fisher, A., van Jaarsveld, C.H.M., Llewellyn, C.H., &amp; Wardle, J. (2012). Genetic and environmental influences on infant sleep. <em>Pediatrics</em>, 129(6), 1091–1096.</li>
+    <li id="ref-6"><span class="ref-num">[6]</span> Loutzenhiser, L., Hoffman, J., &amp; Beatch, J. (2014). Parental perceptions of the effectiveness of graduated extinction. <em>Journal of Reproductive and Infant Psychology</em>, 32(3), 282–291.</li>
+    <li id="ref-7"><span class="ref-num">[7]</span> Gordon, M.D. (2020). The effect of difficult temperament on experiences with infant sleep and sleep training. Poster, Occasional Temperament Conference, University of Virginia.</li>
+    <li id="ref-8"><span class="ref-num">[8]</span> Gordon, M.D. (2022). Examining extinction for infant sleep: An updated review. Poster, International Congress for Infant Studies, Ottawa.</li>
+    <li id="ref-9"><span class="ref-num">[9]</span> Dionne, G. et al. (2011). <em>Sleep</em>, 34(8), 987–995. — Touchette, E. et al. (2013). <em>Pediatrics</em>, 131(6), e1874–e1880.</li>
+    <li id="ref-10"><span class="ref-num">[10]</span> Touchette, E. et al. (2013). Genetic and environmental influences on daytime and nighttime sleep duration in early childhood. <em>Pediatrics</em>, 131(6), e1874–e1880.</li>
+    <li id="ref-11"><span class="ref-num">[11]</span> Blunden, S.L., Thompson, K.R., &amp; Dawson, D. (2011). Behavioural sleep treatments and night time crying in infants: Challenging the status quo. <em>Sleep Medicine Reviews</em>, 15(5), 327–334.</li>
+    <li id="ref-12"><span class="ref-num">[12]</span> Mindell, J.A. et al. (2016). Development of infant and toddler sleep patterns: Real-world data from a mobile application. <em>Journal of Sleep Research</em>, 25(5), 508–516.</li>
+  </ol>
+</section>
+
+<section class="cta-banner">
+  <div class="cta-inner">
+    <h3>Your baby is unique. Their sleep guidance should be too.</h3>
+    <p>OBubba learns your baby's patterns and adapts — no generic schedules, no guesswork.</p>
+    <a href="#" class="cta-button">Download OBubba</a>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 OBubba. A hug from one parent to another. <span class="sep">·</span> <a href="#">Privacy</a> <span class="sep">·</span> <a href="#">Terms</a></p>
+</footer>
+
+</body>
+</html>
